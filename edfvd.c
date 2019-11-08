@@ -1,10 +1,66 @@
-//Currrent 8th Nov 15:24 status: Preemption Not Enabled :'( 
-
 #include<stdio.h>
 #include<stdbool.h>		//To use bool in C, this header file is required.
 #include<limits.h>		//For INT_MAX
 #include<stdlib.h>	//For random numbers generation
 #include<time.h>	//For seeding with currrent time
+
+int checknexttask(float t, int n, float r[],float d[], bool done[])
+{
+	int mintask;
+	
+	bool flagprev=false;
+	
+	for(int i=0;i<n;i++)
+	{
+		if(r[i]<t && done[i]==false)
+		flagprev=true;
+	}
+	
+	if(flagprev==false)
+	{
+		int rmin=INT_MAX,dmin=INT_MAX;
+		
+		for(int i=0;i<n;i++)
+		{
+			if(r[i]<=rmin && done[i]==false)
+			{
+				if(r[i]==rmin)
+				{
+					if(d[i]<dmin)
+					{
+						dmin=d[i];
+						mintask=i;
+					}
+					
+				}
+				else
+				{
+					rmin=r[i];
+					dmin=d[i];
+					mintask=i;	
+				}				
+			}
+		}
+	}
+	
+	else
+	{
+		int rmin=INT_MAX,dmin=INT_MAX;
+		
+		for(int i=0;i<n;i++)
+		{
+			if(r[i]<=t && d[i]<dmin && done[i]==false)
+			{
+				mintask=i;
+				dmin=d[i];
+			}  
+		}
+	}
+	
+	
+	return mintask;
+}
+
 int main()
 {
 	
@@ -92,7 +148,7 @@ int main()
 	
 	printf("\nWith U1(1) = %f, U2(1) = %f, U2(2)=%f\n",u11,u21,u22);
 	
-
+srand(time(0));					//To seed with current time : IMP : Keep outside loop where rand nos. are generated!
 		
 	for(int i=0;i<n;i++)
 	{
@@ -100,7 +156,7 @@ int main()
 		
 		for(int j=0;j<x[i];j++)		
 		{	
-			srand(time(0));					//To seed with current time
+			
 		//	float use=(float)rand()/((float)(RAND_MAX/((float)C[i][j])))+0.5*(float)C[i][j];		//So final value lies anywhere from .5C[i][j] to 1.5C[i][j]. Yay.
 			
 			
@@ -171,7 +227,7 @@ printf("\n\n---------------------Scheduling Started-------------------\n");
 		done[i]=false;
 		
 		
-		int min=INT_MAX,mintask,count=0,level=1;
+		int min=INT_MAX,mintask,count=0,level=1, rmin=INT_MAX;
 		
 		float t=0;
 		
@@ -179,14 +235,16 @@ printf("\n\n---------------------Scheduling Started-------------------\n");
 		
 		while(count!=n&&level==1)
 		{
-			for(int i=0;i<n;i++)
+			/*for(int i=0;i<n;i++)
 			{
 				if(d[i]<min && done[i]==false)
 				{
 					min=d[i];
 					mintask=i;
 				}
-			}
+			}*/
+			
+			mintask=checknexttask(t,n,r,d,done);
 			
 			
 			
@@ -216,10 +274,49 @@ printf("\n\n---------------------Scheduling Started-------------------\n");
 			{
 				printf("Executing Task %d at t= %f (Arrival = %f)\n",mintask+1,t,r[mintask]);
 				
-				printf("Finished Executing Task %d at t= %f (Deadline = %f) \n",mintask+1,t+c[mintask][0],r[mintask]+p[mintask]);
-				t+=c[mintask][0];
-				done[mintask]=true;
-				count++;
+				
+				if(checknexttask(t+c[mintask][0],n,r,d,done)==mintask)
+				{
+					printf("Finished Executing Task %d at t= %f (Deadline = %f) \n",mintask+1,t+c[mintask][0],r[mintask]+p[mintask]);
+					t+=c[mintask][0];
+					done[mintask]=true;
+					count++;
+				}
+				
+				else
+				{
+					int rmin=INT_MAX,dmin=INT_MAX,newtask;
+					
+					for(int i=0;i<n;i++)
+					{						
+						if(r[i]>t && d[i] < d[mintask] && done[i]==false && d[i]<dmin && r[i]<=rmin)
+						{
+							if(r[i]==rmin)
+							{
+								if(d[i]<dmin)
+								{
+									dmin=d[i];
+									newtask=i;
+								}							
+							}
+							else
+							{
+								rmin=r[i];
+								dmin=d[i];
+								newtask=i;	
+							}			
+						}						
+								
+					}
+					printf("Preempted In Middle at t = %f \n",r[newtask]);
+					
+					
+					c[mintask][0]=c[mintask][0]-(r[newtask]-t);
+					t=r[newtask];
+					
+					rmin=INT_MAX;
+					dmin=INT_MAX;
+				}
 			}
 			
 			
