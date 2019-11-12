@@ -13,7 +13,6 @@ Case I Task Set:
 2
 
 
-
 2
 3
 5
@@ -30,6 +29,44 @@ Case I Task Set:
 2
 1
 3
+
+Case I : With Preemption ( No Criticality Level Change) :
+
+1
+3
+5
+25
+1
+5
+10
+30
+1
+5
+8
+38
+1
+5
+
+With Preemption ( No Criticality Level Change, Release time all at 0) :
+
+1
+3
+0
+20
+1
+5
+0
+20
+1
+5
+0
+30
+1
+5
+
+
+
+
 
 Case II Task Set : 
 
