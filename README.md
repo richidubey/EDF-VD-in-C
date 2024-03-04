@@ -22,7 +22,7 @@ Run the following command to start the program. You can pass the input file or e
 ```
 
 ## Sample run
-```bash
+```
 Enter the System's Criticality Level : 2
 Enter number of Tasks: 2
 

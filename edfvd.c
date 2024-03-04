@@ -51,7 +51,8 @@ int main() {
 
     int X, n;
 
-    printf("\t\tHello\n\nEnter the System's Criticality Level : ");
+    //printf("\t\tHello\n\n");
+    printf("Enter the System's Criticality Level : ");
     scanf("%d", &X);
 
     printf("Enter number of Tasks: ");
@@ -288,7 +289,7 @@ int main() {
                 exit(0);
             }
 
-            printf("DEBUG: Mintask= %d\n", mintask);
+            //printf("DEBUG: Mintask= %d\n", mintask);
             if (r[mintask] > t)
                 t = r[mintask];
 
