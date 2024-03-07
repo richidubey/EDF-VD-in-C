@@ -1,6 +1,6 @@
 # EDF-VD-in-C
 
-EDF VD Scheduling Algorithm for mixed criticality systems as described in the paper "Mixed-Criticality Scheduling of Sporadic Task Systems" by Sanjoy Baruah, Vincenzo Bonifaci, Gianlorenzo d’Angelo, Alberto Marchetti-Spaccamela, Suzanne Ster, Leen Stougi. [Link to the paper](https://inria.hal.science/hal-00643987)
+EDF VD Scheduling Algorithm for mixed criticality systems as described in the paper "Mixed-Criticality Scheduling of Sporadic Task Systems" by Sanjoy Baruah, Vincenzo Bonifaci, Gianlorenzo d’Angelo, Alberto Marchetti-Spaccamela, Suzanne Ster, Leen Stougi [[Link to the paper]](https://inria.hal.science/hal-00643987).
 
 ## Set up
 
